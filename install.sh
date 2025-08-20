@@ -17,7 +17,8 @@ if ! sudo -v; then
     exit 1
 fi
 
-mv gpg.tar.gpg ~
+git remote set-url origin git@github.com:joshsurber/setup.git
+cp ssh.tar.gpg ~
 cd ~
 gpg ssh.tar.gpg
 tar xf ssh.tar
