@@ -66,8 +66,10 @@ if has pacman && ! has yay; then
     cd ..
     rm -rf yay
 elif has apt; then
-    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-    sudo rm -rf /opt/nvim-linux64
-    sudo tar -C /opt -xzf nvim-linux64.tar.gz
-    rm nvim-linux64.tar.gz
+    # curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+    # sudo rm -rf /opt/nvim-linux64
+    # sudo tar -C /opt -xzf nvim-linux64.tar.gz
+    # rm nvim-linux64.tar.gz
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    brew install neovim
 fi
