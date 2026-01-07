@@ -5,8 +5,8 @@
 # hypr="cliphist hypridle hyprland hyprlock hyprpaper hyprpicker hyprshot swaync waybar wl-clipboard"
 # apps="ghostty make eza fish fzf lazygit noto-fonts-emoji ripgrep stow tldr tmux ttf-cascadia-code-nerd ttf-firacode-nerd ttf-roboto vifm zoxide"
 
-aptinstall='wl-clipboard kitty git'
-brewinstall='eza fish fd bat bat-extras fzf lazygit make neovim ripgrep starship stow tldr tmux'
+aptinstall='wl-clipboard kitty git stow'
+brewinstall='eza fish fd bat bat-extras fzf lazygit make neovim ripgrep starship tldr tmux'
 
 has() {
     command -v "$1" 1>/dev/null 2>&1
