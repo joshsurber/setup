@@ -27,6 +27,7 @@ sudo apt install $aptinstall
 # return
 git clone --recursive git@github.com:joshsurber/.files
 cd .files
+make
 
 if has bat; then
     bat cache --build
@@ -35,7 +36,6 @@ elif has batcat; then
 fi
 
 mkdir -p ~/Projects
-make
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew install $brewinstall
