@@ -6,7 +6,7 @@
 # apps="ghostty make eza fish fzf lazygit noto-fonts-emoji ripgrep stow tldr tmux ttf-cascadia-code-nerd ttf-firacode-nerd ttf-roboto vifm zoxide"
 
 aptinstall='wl-clipboard kitty git'
-brewinstall='eza fish fd bat bat-extras fzf lazygit make neovim ripgrep stow tldr tmux'
+brewinstall='eza fish fd bat bat-extras fzf lazygit make neovim ripgrep starship stow tldr tmux'
 
 has() {
     command -v "$1" 1>/dev/null 2>&1
