@@ -35,6 +35,8 @@ fi
 $install $system $hypr $apps $distro
 git clone --recursive git@github.com:joshsurber/.files
 cd .files
+rm -rf ~/.config/hypr
+make
 
 if has bat; then
     bat cache --build
@@ -46,8 +48,6 @@ mkdir -p ~/Google ~/Projects ~/.config/rclone
 cat rclone.txt >~/.config/rclone/rclone.conf
 xdg-user-dirs-update
 rclone config reconnect drive:
-rm -rf ~/.config/hypr
-make
 sudo mkdir /etc/keyd
 sudo ln keyd.conf /etc/keyd/default.conf
 
