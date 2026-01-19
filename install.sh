@@ -1,13 +1,40 @@
 #! /bin/bash
 # vim: ft=bash fdm=indent wrap
+set -e
+#only needed on arch
+arch="base-devel zip cups fuse2 fuse3 ghostty gvfs gvfs-smb man-db moreutils npm pamixer pkgfile unzip xdg-user-dirs noto-fonts-emoji ttf-cascadia-code-nerd ttf-firacode-nerd ttf-roboto"
+# always install via pkg manager
+system=" git make stow"
+# always install; pkgmgr on arch, brew on deb/chromeos
+utils=" bat bat-extras eza fd fish fzf lazygit moreutils neovim starship ripgrep tldr tmux vifm zoxide xclip "
+xutils=" xclip arandr autorandr brightnessctl autotiling clipmenu dunst nitrogen maim picom polybar polybar rofi rofi-calc rofi-emoji rofimoji "
+wutils="cliphist hypridle hyprland hyprlock hyprpaper hyprpicker hyprshot swaync waybar wl-clipboard "
+apps=" chromium kitty neovide rclone thunar xarchiver "
+i3=" i3 "
+hypr="hyprland"
+awesome="awesome"
 
-system="base-devel xclip zip cups fuse2 fuse3 ghostty git gvfs gvfs-smb keyd make man-db moreutils npm pamixer pkgfile unzip xdg-user-dirs "
+# 1. Display the options to the user
+echo "Select a Window Manager, default is none"
+echo "1) none"
+echo "2) Hyprland"
+echo "3) i3"
+echo "4) awesome"
 
-XorgWM="arandr autorandr autotiling clipmenu dunst i3 nitrogen maim picom polybar polybar rofi rofi-calc rofi-emoji rofimoji"
+# 2. Read user input
+# -p: prompt string
+# -r: prevents backslashes from acting as escape characters
+read -p "Enter choice [1-4]: " choice
+# 3. Set the default if input is empty
+choice=${choice:-1}
 
-hypr="cliphist hypridle hyprland hyprlock hyprpaper hyprpicker hyprshot swaync waybar wl-clipboard"
-
-apps="brightnessctl chromium eza fish fzf kitty lazygit neovide neovim noto-fonts-emoji rclone ripgrep starship stow thunar tldr tmux ttf-cascadia-code-nerd ttf-firacode-nerd ttf-roboto vifm xarchiver zoxide"
+# 4. Set variables based on choice
+case $choice in
+  1) stuff="$system" ;;
+  2) stuff="$system $wutils $hypr $apps" ;;
+  3) stuff="$system $i3 $xutils $apps" ;;
+esac
+  4) stuff="$system $awesome $xutils $apps" ;;
 
 has() {
     command -v "$1" 1>/dev/null 2>&1
@@ -22,25 +49,18 @@ cp ssh.tar.gpg ~
 cd ~
 gpg ssh.tar.gpg
 tar xf ssh.tar
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/*
 
 if has pacman; then
-    install="sudo pacman -S --needed"
-    distro="fd bat bat-extras"
+    sudo pacman -S --needed $stuff $arch $utils
 elif has apt; then
-    install="sudo apt install"
-    disto="fdfind batcat"
-    curl -sS https://starship.rs/install.sh | sh
+    sudo apt update && sudo apt upgrade
+    sudo apt install $stuff
 fi
 
-$install $system $hypr $apps $distro
 git clone --recursive git@github.com:joshsurber/.files
 cd .files
-
-if has bat; then
-    bat cache --build
-elif has batcat; then
-    bat cache --build
-fi
 
 mkdir -p ~/Google ~/Projects ~/.config/rclone
 cat rclone.txt >~/.config/rclone/rclone.conf
@@ -64,12 +84,10 @@ if has pacman && ! has yay; then
     yay -Syu --devel
     yay -Y --devel --save
     cd ..
-    rm -rf yay
+    rm -rf yay-bin
 elif has apt; then
-    # curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-    # sudo rm -rf /opt/nvim-linux64
-    # sudo tar -C /opt -xzf nvim-linux64.tar.gz
-    # rm nvim-linux64.tar.gz
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    brew install neovim
+    brew install $utils
+    curl -L https://bit.ly/n-install | bash
 fi
+bat cache --build
