@@ -77,7 +77,7 @@ if has apt; then
     if ! has brew; then
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
-    brew install $utils
+    /home/linuxbrew/.linuxbrew/bin/brew install $utils
 fi
 
 bat cache --build
