@@ -2,10 +2,10 @@
 # vim: ft=bash fdm=indent wrap
 set -e
 #only needed on arch
-arch="base-devel zip cups fuse2 fuse3 ghostty gvfs gvfs-smb man-db moreutils npm pamixer pkgfile unzip xdg-user-dirs noto-fonts-emoji ttf-cascadia-code-nerd ttf-firacode-nerd ttf-roboto"
+arch="base-devel zip cups fuse2 fuse3 ghostty gvfs gvfs-smb man-db moreutils npm pamixer pkgfile unzip xdg-user-dirs noto-fonts-emoji ttf-cascadia-code-nerd ttf-firacode-nerd ttf-roboto antigravity-cli"
 # always install via pkg manager
 system=" git make stow"
-# always install; pkgmgr on arch, brew on deb/chromeos
+# always install; pacman  on arch, brew on deb/chromeos, because apt repos are out of date
 utils=" bat bat-extras eza fd fish fzf lazygit moreutils neovim starship ripgrep tldr tmux vifm zoxide xclip "
 xutils=" xclip arandr autorandr brightnessctl autotiling clipmenu dunst nitrogen maim picom polybar polybar rofi rofi-calc rofi-emoji rofimoji "
 wutils="cliphist hypridle hyprland hyprlock hyprpaper hyprpicker hyprshot swaync waybar wl-clipboard "
@@ -87,6 +87,7 @@ if has pacman && ! has yay; then
     rm -rf yay-bin
 elif has apt; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    curl -fsSL https://antigravity.google/cli/install.sh | bash
     brew install $utils
     curl -L https://bit.ly/n-install | bash
 fi
